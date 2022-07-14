@@ -2,7 +2,7 @@
 ![Иллюстрация к проекту](https://github.com/h0riz4n/lottery_bot/blob/main/picture.png)
 > Telegram bot for making lottery with users in telegram.
 
-**Used technology**
+# Used technology
 - Python 3.10.4
 - Aiogram (framework for telegram bot)
 - Asyncpg (library for working with Database)
