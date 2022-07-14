@@ -1,4 +1,4 @@
-**[Lottery telegram bot]**(https://github.com/h0riz4n/lottery_bot)
+**[Lottery telegram bot](https://github.com/h0riz4n/lottery_bot)**
 Telegram bot for making lottery with users in telegram.
 
 **Used technology**
