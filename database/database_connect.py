@@ -7,10 +7,10 @@ class Database:
 
     async def create_pool(self):
         self.pool =  await asyncpg.create_pool(
-                database="kwork_bot", 
-                user='postgres', 
-                password="horizonplay2017", 
-                host="localhost", 
+                database="", 
+                user='', 
+                password="", 
+                host="", 
                 port="5432",
                 max_size=100
         )
