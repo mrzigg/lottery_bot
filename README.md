@@ -5,7 +5,7 @@
 # Used technology
 - Python 3.10.4
 - Aiogram (framework for telegram bot)
-- Asyncpg (library for working with Database)
+- Asyncpg (library for working with database)
 - Apscheduler (library for periodic tasks)
-- PostgreSQL (Database)
+- PostgreSQL (database)
 - Docker (containerization)
