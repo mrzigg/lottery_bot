@@ -22,6 +22,7 @@ tg = Ticket()
 @dp.callback_query_handler(PrivateFilter(), text="check_in")
 async def callback_check_in(callback_query: types.CallbackQuery):
     ticket = await ticket_db.get_tickets(callback_query.from_user.id)
+    await db.update_button_2(callback_query.from_user.id)
     tg.make_ticket_prime(callback_query.from_user.id)
     ticket.append(tg.password)
     await ticket_db.update_function(callback_query.from_user.id, ticket, "tickets")
@@ -33,7 +34,7 @@ async def callback_check_in(callback_query: types.CallbackQuery):
 
 
 @dp.callback_query_handler(PrivateFilter(), text_contains="gender_")
-async def test(callback_query: types.CallbackQuery):
+async def gender_message(callback_query: types.CallbackQuery):
     if callback_query.data == "gender_male":
         await db.update_gender(callback_query.from_user.id, True)
     else:
