@@ -8,4 +8,4 @@
 - Asyncpg (library for working with Database)
 - Apscheduler (library for periodic tasks)
 - PostgreSQL (Database)
-- Docker(not sure)
+- Docker (not sure)
