@@ -47,3 +47,11 @@ async def update_country(user_id, country: str):
 async def all_users():
     async with db.pool.acquire() as con:
         return await con.fetch(''' SELECT id FROM tg_users ''')
+
+async def get_button_status(user_id):
+    async with db.pool.acquire() as con:
+        return await con.fetchval(''' SELECT button_2 FROM tg_users WHERE id = $1 ''', user_id)
+
+async def update_button_2(user_id):
+    async with db.pool.acquire() as con:
+        await con.execute(''' UPDATE tg_users SET button_2 = True WHERE id = $1 ''', user_id)
