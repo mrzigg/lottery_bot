@@ -20,10 +20,10 @@ class Giving_information:
         self.datetime = str(await lot_db.get_date())
         self.date = self.datetime[8:10] + "." + self.datetime[5:7] + "." + self.datetime[:4] + " в " + self.datetime[11:16]
         
-        self.tickets_sp = await tick_db.get_tickets(user_id)
+        self.tickets_sp = str(await tick_db.get_tickets(user_id)).replace("[", "").replace("]", "")
 
         if len(self.tickets_sp) != 0:
-            self.tickets = ", ".join(self.tickets_sp)
+            self.tickets = str(await tick_db.get_tickets(user_id)).replace("[", "").replace("]", "")
             self.tickets_amount = len(self.tickets_sp)
         else:
             self.tickets, self.tickets_amount = "", 0
