@@ -6,5 +6,6 @@
 - Python 3.10.4
 - Aiogram (framework for telegram bot)
 - Asyncpg (library for working with Database)
+- Apscheduler (library for periodic tasks)
 - PostgreSQL (Database)
 - Docker(not sure)
