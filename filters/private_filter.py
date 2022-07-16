@@ -19,5 +19,5 @@ class PrivateFilter(BoundFilter):
         if user_channel_status["status"] != 'left':
             return True
         else:
-            await bot.send_message(message.from_user.id, '<b>Вы не подписаны на канал❌</b>', reply_markup=keyboard, disable_web_page_preview=True)
+            await bot.send_message(message.from_user.id, '<b>Вы не подписаны на канал❌</b>', reply_markup=keyboard)
             return None
