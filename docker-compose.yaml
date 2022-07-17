@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  app:
+    image: nginx:latest
+    container_name: telegram_bot
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/ssl/certificate.crt:/etc/ssl/certificate.crt
+      - /etc/ssl/private.key:/etc/ssl/private.key
+      - ./web-root:/var/www/html/
+      - /nginx_conf:/etc/nginx/sites-available
+
+  bot:
+    build: /root/app/
+    depends_on:
+      - app
+    ports:
+      - 7772:7772
