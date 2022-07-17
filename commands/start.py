@@ -13,6 +13,7 @@ from config.load_all import dp, bot
 import database.users_db as db
 import database.tickets_db as ticket_db
 from menu.reply.start_board import start_menu
+from menu.reply.user_menu import keyboard
 from functions.make_ticket import Ticket
 
 tc = Ticket()
@@ -29,14 +30,20 @@ async def start_command(message: types.Message):
         if args == "":
             pass
         else:
-            existing_link = await db.find_link(int(args))
+            existing_link = await ticket_db.existing_link(int(args))
             print(existing_link)
             if not existing_link:
                 pass
             else:
-                ticket = await ticket_db.get_tickets(existing_link[2])
-                tc.make_ticket_prime(str(existing_link[2]))
-                ticket.append(tc.password)
-                await ticket_db.update_function(existing_link[2], ticket, "tickets")
+                invites = int(existing_link[7])+int(1)
+                ticket, tickets_sp = existing_link[6], ""
+                await ticket_db.update_invites(existing_link[3], invites)
+                for i in range(int(invites+2)):
+                    tc.make_ticket_prime(str(existing_link[3]))
+                    tickets_sp += f"🎫 {str(tc.password)}\n"
+                    ticket.append(tc.password)
+                await ticket_db.update_function(existing_link[3], ticket, "tickets")
+                await bot.send_message(existing_link[3], f"<b>Твой друг принял участие в розыгрыше🥳</b>\n\nЗа это ты получаешь <b>{invites+2}</b> билета\n\nНомера билетов:\n{tickets_sp}\n\nТеперь у тебя {len(ticket)} шансов выиграть приз\nПригласим еще 1 друга?\n<b>Увеличим шансы на победу?</b>\n\nСсылка для приглашений:\nhttps://t.me/h0riz4nbot?start={existing_link[3]}",
+                disable_web_page_preview=True, reply_markup=keyboard)
     else:
         pass
