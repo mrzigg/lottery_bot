@@ -16,14 +16,6 @@ async def add_user(user_id, link):
     async with db.pool.acquire() as con:
         await con.execute(''' INSERT INTO tg_users (customer_id, bot_id, id, ref_tg_user_id) VALUES (1, 2061411546, $1, $2) ''', user_id, link)
 
-async def find_link(user_id):
-    async with db.pool.acquire() as con:
-        return await con.fetchrow(''' SELECT * FROM tg_users WHERE id = $1 ''', user_id)
-
-async def get_link(user_id):
-    async with db.pool.acquire() as con:
-        return await con.fetchval(''' SELECT ref_tg_user_id FROM tg_users WHERE id = $1 ''', user_id)
-
 async def button_status(user_id):
     async with db.pool.acquire() as con:
         return await con.fetchval(''' SELECT button FROM tg_users WHERE id = $1 ''', user_id)

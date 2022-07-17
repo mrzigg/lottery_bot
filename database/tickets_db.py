@@ -19,3 +19,11 @@ async def update_function(user_id, amount, column):
 async def get_tickets(user_id):
     async with db.pool.acquire() as con:
         return await con.fetchval(''' SELECT tickets FROM tickets WHERE owner_tg_user_id = $1 ''', user_id)
+
+async def existing_link(user_id: int):
+    async with db.pool.acquire() as con:
+        return await con.fetchrow(''' SELECT * FROM tickets WHERE owner_tg_user_id = $1  ''', user_id)
+
+async def update_invites(user_id: int, invites: int):
+    async with db.pool.acquire() as con:
+        await con.execute(''' UPDATE tickets SET invites = $1 WHERE owner_tg_user_id = $2 ''', invites, user_id)
