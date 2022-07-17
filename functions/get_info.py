@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import os
 import sys
 import inspect
@@ -7,9 +9,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 import database.lottery_db as lot_db
-import database.users_db as user_db
 import database.tickets_db as tick_db
-
 
 class Giving_information:
 
@@ -17,13 +17,19 @@ class Giving_information:
         pass
 
     async def getting_information(self, user_id):       
-        self.datetime = str(await lot_db.get_date())
-        self.date = self.datetime[8:10] + "." + self.datetime[5:7] + "." + self.datetime[:4] + " в " + self.datetime[11:16]
+        self.date = datetime.strftime(await lot_db.get_date(), '%d.%m.%Y в %H:%M')
         
-        self.tickets_sp = str(await tick_db.get_tickets(user_id)).replace("[", "").replace("]", "")
+        self.tickets_sp = await tick_db.get_tickets(user_id)
 
         if len(self.tickets_sp) != 0:
-            self.tickets = str(await tick_db.get_tickets(user_id)).replace("[", "").replace("]", "")
             self.tickets_amount = len(self.tickets_sp)
         else:
             self.tickets, self.tickets_amount = "", 0
+
+    async def my_tickets(self, user_id):
+        ticket_sp = await tick_db.get_tickets(user_id)
+
+        self.user_ticket_amount, self.user_tickets = len(ticket_sp), ""
+        
+        for row in ticket_sp:
+            self.user_tickets += f"🎫{str(row)}\n"
