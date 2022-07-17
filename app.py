@@ -2,7 +2,7 @@ from aiogram.utils import executor
 import logging
 
 from config.load_all import dp, scheduler
-import config.load_all as cfg 
+import config.load_all as cfg
 
 import commands.start
 import buttons.start_play
@@ -23,15 +23,16 @@ async def on_startup(dp):
     logging.warning("AsyncIOScheduler is active")
     await cfg.db.create_pool()
     logging.warning("Database connection is opened")
-    scheduler.add_job(sending_message, "interval", seconds=10)
+    scheduler.add_job(sending_message, "interval", days=1)
     logging.warning("Sending tasks is active")
 
 
 async def on_shutdown(dp):
     scheduler.shutdown()
+    logging.warning("AsyncIOScheduler is anactive")
     await cfg.db.close()
     logging.warning("Database connection is closed")
 
 
 if __name__ == "__main__":
-    executor.start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown)
+    executor.start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown, skip_updates=False)
