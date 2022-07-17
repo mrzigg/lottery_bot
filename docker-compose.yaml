@@ -19,4 +19,4 @@ services:
     depends_on:
       - app
     ports:
-      - 7772:7772
+      - 8443:8443
