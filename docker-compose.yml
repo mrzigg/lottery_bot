@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   webserver:
     image: nginx:mainline-alpine
     container_name: webserver
@@ -19,6 +20,7 @@ services:
       - dhparam:/etc/ssl/certs
     networks:
       - app-network
+      
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -40,7 +42,7 @@ services:
       - app-network
     ports:
       - "3001"
-
+      
 volumes:
   certbot-etc:
   certbot-var:
