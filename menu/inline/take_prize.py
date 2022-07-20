@@ -1,6 +1,5 @@
-from aiogram import types
+from aiogram.types import InlineKeyboardMarkup, KeyboardButton
 
-taking_board = types.InlineKeyboardMarkup(row_width=1)
-button_1 = types.InlineKeyboardButton("Забрать бонус🎁", callback_data="taking_part")
 
-taking_board.add(button_1)
+button_1 = KeyboardButton("Забрать бонус🎁", callback_data="taking_part")
+taking_board = InlineKeyboardMarkup(row_width=1).add(button_1)

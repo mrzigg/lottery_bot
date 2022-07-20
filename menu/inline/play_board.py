@@ -1,5 +1,5 @@
-from aiogram import types
+from aiogram.types import InlineKeyboardMarkup, KeyboardButton
 
-keyboard = types.InlineKeyboardMarkup()
-button_1 = types.InlineKeyboardButton("Я в деле✅", callback_data="i_am_in")
-keyboard.add(button_1)
+
+button_1 = KeyboardButton("Я в деле✅", callback_data="i_am_in")
+play_board = InlineKeyboardMarkup(row_width=1).add(button_1)
