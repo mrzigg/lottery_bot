@@ -30,7 +30,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email DreaMaNG2toPla2y@yandex.ru --agree-tos --no-eff-email --staging -d example.ru  -d www.example.ru
+    command: certonly --webroot --webroot-path=/var/www/html --email example@mail.ru --agree-tos --no-eff-email --staging -d example.ru  -d www.example.ru
 
   bot:
     build: ./
