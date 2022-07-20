@@ -9,3 +9,5 @@
 - Apscheduler (library for periodic tasks)
 - PostgreSQL (database)
 - Docker and docker-compose (containerization)
+- Nginx (proxy webserver)
+- Let's Encrypt (ssl certificates)
