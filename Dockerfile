@@ -9,6 +9,6 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 RUN cd /usr/src/app
 
-EXPOSE 8443
+EXPOSE 3001
 
 ENTRYPOINT ["python3", "app.py"]
