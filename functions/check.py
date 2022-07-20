@@ -10,6 +10,7 @@ from config.load_all import bot
 import database.users_db as db
 from menu.inline.check_follow_board import *
 
+
 class Checking:
 
     async def thirty_minutes(self, user_id):

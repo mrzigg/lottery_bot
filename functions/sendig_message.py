@@ -17,6 +17,7 @@ from functions.make_ticket import Ticket
 
 tg = Ticket()
 
+
 async def sending_message():
     users = await db.all_users()
     for row in users:
@@ -27,11 +28,7 @@ async def sending_message():
 
 @dp.callback_query_handler(PrivateFilter(), text="taking_part")
 async def taking_bonus_callback(callback_query: types.CallbackQuery):
-    ticket = await ticket_db.get_tickets(callback_query.from_user.id)
-    for i in range(5):
-        tg.make_ticket_prime(callback_query.from_user.id)
-        ticket.append(tg.password)
-    await ticket_db.update_function(callback_query.from_user.id, ticket, "tickets")
+    await tg.updating_db(callback_query.from_user.id, 5)
     ticket = await ticket_db.get_tickets(callback_query.from_user.id)
     await bot.edit_message_reply_markup(chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
     await bot.send_message(callback_query.from_user.id, f"<b> Бонус получен!</b>\n\nТеперь у тебя <b>{len(ticket)}</b> лотерейных билетов.\n\nЧтобы размер бонуса увеличивался - забирай его каждый день.",
