@@ -1,6 +1,5 @@
 from .bot_config import TOKEN
 from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -18,6 +17,5 @@ from database.database_connect import Database
 scheduler = AsyncIOScheduler()
 db = Database()
 bot = Bot(TOKEN, parse_mode="html")
-storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
+dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
