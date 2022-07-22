@@ -52,7 +52,7 @@
 
 Потом, **находясь в директории с файлом docker-compose.yml,** прописываем команду: `docker-compose up -d` _(флаг **-d** необходим, чтобы запустить развёртывание в фоновом режиме)_
 
-После успешного запуска заходим снова в файл `./nginx-conf/nginx.conf` и вводим [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf)
+После успешного запуска прописываем `docker-compose down` и заходим снова в файл `./nginx-conf/nginx.conf` и вводим [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf)
 
 ### В папке nginx-conf должен всегда находиться один файл nginx.conf. Все изменения введутся только в одном файле.
 
