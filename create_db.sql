@@ -57,7 +57,7 @@ CREATE TRIGGER bots_id_seq BEFORE INSERT ON bots
     FOR EACH ROW EXECUTE PROCEDURE bots_id_seq();
 
 CREATE TYPE age_range AS enum (
-    'до 14',
+    'до 18',
     '18-24',
     '25-34',
     '35-44',
