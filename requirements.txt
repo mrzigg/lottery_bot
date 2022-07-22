@@ -1,4 +1,4 @@
 python==3.10.4
-aiogram==2.19
+aiogram==2.21
 asyncpg==0.25.0
 apscheduler==3.9.1
