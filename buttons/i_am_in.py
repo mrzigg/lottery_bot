@@ -17,15 +17,17 @@ import database.users_db as db
 import database.lottery_db as lot_db
 from functions.make_ticket import Ticket
 from filters.private_filter import PrivateFilter
+from functions.make_links import Channel_link
 
 check = Checking()
 tg = Ticket()
-
+channel_link = Channel_link()
 
 @dp.callback_query_handler(text="i_am_in")
 async def in_call_back(callback_query: types.CallbackQuery):
     await db.update_button(callback_query.from_user.id, True)
-    await bot.send_message(callback_query.from_user.id, "Для участия в розыгрыше <b>подпишись</b> на наш канал\n\nПосле того как ты подпишешься -<b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.",
+    channel_link.make_links()
+    await bot.send_message(callback_query.from_user.id, f"Для участия в розыгрыше <b>подпишись</b> на наши каналы:\n\n{channel_link.links}\n\nПосле того как ты подпишешься -<b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.",
     reply_markup=Subscription_Menu_2)
     await bot.edit_message_reply_markup(chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
     
@@ -42,16 +44,16 @@ async def in_call_back(callback_query: types.CallbackQuery):
 
 
 @dp.callback_query_handler(text="lets_fix")
-async def Lets_fix(call: types.CallbackQuery):    
-    await bot.send_message(call.from_user.id, 'Для участия в розыгрыше <b>подпишись</b> на наш канал:\n👉 https://t.me/testtelegiv\n\nПосле того как ты подпишешься - <b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.', reply_markup=Subscription_Menu_2,
-    disable_web_page_preview=True)
+async def Lets_fix(call: types.CallbackQuery):
+    channel_link.make_links()
+    await bot.send_message(call.from_user.id, f'Для участия в розыгрыше <b>подпишись</b> на наш канал:\n{channel_link.links}\n\nПосле того как ты подпишешься - <b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.', reply_markup=Subscription_Menu_2)
     await bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id)
 
 
 @dp.callback_query_handler(text="participation")
 async def Participation(call: types.CallbackQuery):
-    await bot.send_message(call.from_user.id, 'Для участия в розыгрыше <b>подпишись</b> на наш канал:\n👉 https://t.me/testtelegiv\n\nПосле того как ты подпишешься - <b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.', reply_markup=Subscription_Menu,
-    disable_web_page_preview=True)
+    channel_link.make_links()
+    await bot.send_message(call.from_user.id, f'Для участия в розыгрыше <b>подпишись</b> на наш канал:\n{channel_link.links}\n\nПосле того как ты подпишешься - <b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.', reply_markup=Subscription_Menu)
     await bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id)
 
 

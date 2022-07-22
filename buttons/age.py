@@ -17,7 +17,6 @@ from menu.inline.contry_board import country_board
 
 tg = Ticket()
 
-
 @dp.callback_query_handler(PrivateFilter(), text_contains="age_")
 async def age_callback_data(callback_query: types.CallbackQuery):
     if callback_query.data == "age_18":

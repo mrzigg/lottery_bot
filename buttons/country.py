@@ -16,21 +16,20 @@ from menu.reply.user_menu import keyboard
 
 tg = Ticket()
 
-
 @dp.callback_query_handler(PrivateFilter(), text_contains="country_")
 async def country_callback_data(callback_query: types.CallbackQuery):
     if callback_query.data == "country_belarus":
-        await db.update_country(callback_query.from_user.id, "belarus")
+        await db.update_country(callback_query.from_user.id, "🇧🇾")
     elif callback_query.data == "country_ukraine":
-        await db.update_country(callback_query.from_user.id, "ukraine")
+        await db.update_country(callback_query.from_user.id, "🇺🇦")
     elif callback_query.data == "country_kazakhstan":
-        await db.update_country(callback_query.from_user.id, "kazakhstan")
+        await db.update_country(callback_query.from_user.id, "🇰🇿")
     elif callback_query.data == "country_russia":
-        await db.update_country(callback_query.from_user.id, "russia")
+        await db.update_country(callback_query.from_user.id, "🇷🇺")
     elif callback_query.data == "country_uzbekistan":
-        await db.update_country(callback_query.from_user.id, "uzbekistan")
+        await db.update_country(callback_query.from_user.id, "🇺🇿")
     elif callback_query.data == "country_any":
-        await db.update_country(callback_query.from_user.id, "another_country")
+        await db.update_country(callback_query.from_user.id, "Any")
     await tg.updating_db(callback_query.from_user.id, 1)
     text = f"<b>Большое спасибо за ответы! </b>\n\nДержи еще <b>+1 </b> лотерейный билет\n🎫Номер билета: <b>{tg.password}\n</b>Всего лотерейных билетов: <b>4</b>\n\n<i>Этот опрос поможет нам понять, какие призы могут быть максимально интересны в нашем следующем розыгрыше)</i>"
     await bot.edit_message_text(chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id, text=text)
