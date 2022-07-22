@@ -56,4 +56,10 @@
 
 ### В папке nginx-conf должен всегда находиться один файл nginx.conf. Все изменения введутся только в одном файле.
 
-После того как мы ввели новую конфигурацию для `nginx.conf` и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [теже параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py)
+После того как мы ввели [новую конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf) для `nginx.conf` и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [теже параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py)
+
+_Так же в файле nginx.conf прошу обращать внимание на **/** в строке proxy_pass._
+
+Для запуска бота прописываем команду:`docker-compose build && docker-compose up -d`
+
+### И телеграм бот теперь запущен и готов к работе!
