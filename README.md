@@ -1,5 +1,5 @@
 # [Тelegiv telegram bot](https://github.com/h0riz4n/lottery_bot)
-![Иллюстрация к проекту](https://github.com/h0riz4n/lottery_bot/blob/main/telegib_vot.jpg)
+![Иллюстрация к проекту](https://github.com/h0riz4n/lottery_bot/blob/main/telegiv_bot.jpg)
 > Телеграм бот для проведения лотереи среди пользователей в телеграме.
 
 # Технологии разработки
