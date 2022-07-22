@@ -68,7 +68,7 @@
 
 # Запуск бота на Localhost. (Nginx и Let's Encrypt)
 Для запуска бота на хосте, будет необходимо провести настройки для прокси-сервера Nginx и добавить сертификаты для доменов с помощью Let's Encrypt. 
-Для проведения настроек вот [статья на digitalocean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04-ru)
+Для проведения настроек вот [статья на digitalocean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04-ru).
 После проведения процедур найстроки конфигурации файла `/etc/nginx/nginx.conf` бот будет работать по хосту **127.0.0.1** с портом 3000, 3001, 8080, 7771, 7772 и 8443. 
 
 > Бот расчитан на то, что база данных будет находиться удалённо от бота, поэтому образы **PostgreSQL** не были добавлены в файл `docker-compose.yml`
