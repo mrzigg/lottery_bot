@@ -45,6 +45,8 @@
 
 `git clone https://github.com/h0riz4n/lottery_bot`
 
- - **Теперь переходим к развёртыванию нашего приложения.**
+ ## Теперь переходим к развёртыванию нашего приложения.
  
- Прежде всего Вам будет необходимо изменить файл ./nginx-conf/nginx.conf на [эту конфигурацию]()
+Прежде всего Вам будет необходимо изменить файл ./nginx-conf/nginx.conf на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
+- Небходимо будет добавить 
+ 
