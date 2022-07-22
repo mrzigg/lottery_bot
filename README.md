@@ -47,6 +47,8 @@
 
 `git clone https://github.com/h0riz4n/lottery_bot`
 
+И создаём директории: `mkdir views && mkdir dhparam`
+
  ## Теперь переходим к развёртыванию нашего приложения.
  
 Прежде всего Вам будет необходимо изменить файл `./nginx-conf/nginx.conf` на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
@@ -61,6 +63,10 @@
 После того как мы ввели [новую конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf) для `nginx.conf` и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [теже параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py)
 
 > Так же в файле nginx.conf прошу обращать внимание на **/** в строке proxy_pass
+
+Так же пропишите команду, указав правильно директорию: `sudo openssl dhparam -out /root/bot/dhparam/dhparam-2048.pem 2048`
+
+Это необходимо для создания ключа Diffie-Hellman и прямой секретности.
 
 Для запуска бота прописываем команду:`docker-compose build && docker-compose up -d`
 
