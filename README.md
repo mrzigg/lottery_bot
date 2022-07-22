@@ -47,9 +47,13 @@
 
  ## Теперь переходим к развёртыванию нашего приложения.
  
-Прежде всего Вам будет необходимо изменить файл ./nginx-conf/nginx.conf на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
+Прежде всего Вам будет необходимо изменить файл `./nginx-conf/nginx.conf` на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
 - Небходимо будет добавить `- ./nginx-conf:/etc/nginx/conf.d` и убрать или закомментировать строку `- ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf`
 
 Потом, **находясь в директории с файлом docker-compose.yml,** прописываем команду: `docker-compose up -d` _(флаг **-d** необходим, чтобы запустить развёртывание в фоновом режиме)_
 
-После успешного запуска заходим снова в файл ./nginx-conf/nginx.conf и вводи [данную конфигурацию]()
+После успешного запуска заходим снова в файл `./nginx-conf/nginx.conf` и вводим [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf)
+
+### В папке nginx-conf должен всегда находиться один файл nginx.conf. Все изменения введутся только в одном файле.
+
+После того как мы ввели новую конфигурацию для `nginx.conf` и в файле ./config/webhook_
