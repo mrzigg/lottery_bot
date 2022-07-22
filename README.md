@@ -58,7 +58,7 @@
 
 После того как мы ввели [новую конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf) для `nginx.conf` и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [теже параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py)
 
-_Так же в файле nginx.conf прошу обращать внимание на **/** в строке proxy_pass._
+> Так же в файле nginx.conf прошу обращать внимание на **/** в строке proxy_pass
 
 Для запуска бота прописываем команду:`docker-compose build && docker-compose up -d`
 
