@@ -1,3 +1,5 @@
+from.main_data import customer_id, bot_id, raffle_id
+
 import os
 import sys
 import inspect
@@ -12,9 +14,9 @@ async def user_exists(user_id):
     async with db.pool.acquire() as con:
         return await con.fetchval(''' SELECT id FROM tg_users WHERE id = $1 ''', user_id)
     
-async def add_user(user_id, link):
+async def add_user(user_id: int, link: int):
     async with db.pool.acquire() as con:
-        await con.execute(''' INSERT INTO tg_users (customer_id, bot_id, id, ref_tg_user_id) VALUES (1, 2061411546, $1, $2) ''', user_id, link)
+        await con.execute(''' INSERT INTO tg_users (customer_id, bot_id, id, ref_tg_user_id) VALUES ($1, $2, $3, $4) ''', customer_id, bot_id, user_id, link)
 
 async def button_status(user_id):
     async with db.pool.acquire() as con:

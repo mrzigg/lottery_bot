@@ -1,3 +1,5 @@
+from .main_data import customer_id, bot_id, raffle_id
+
 import os
 import sys
 import inspect
@@ -8,9 +10,9 @@ sys.path.insert(0, parentdir)
 
 from config.load_all import db
 
-async def add_user(user_id, tickets):
+async def add_user(user_id):
     async with db.pool.acquire() as con:
-        await con.execute(''' INSERT INTO tickets (customer_id, bot_id, raffle_id, id, owner_tg_user_id, tickets) VALUES (1, 2061411546, 1, $1, $2, $3) ''', user_id, user_id, tickets)
+        await con.execute(''' INSERT INTO tickets (customer_id, bot_id, raffle_id, id, owner_tg_user_id) VALUES ($1, $2, $3, $4, $5) ''', customer_id, bot_id, raffle_id, user_id, user_id)
 
 async def update_function(user_id, amount, column):
     async with db.pool.acquire() as con:
