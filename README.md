@@ -1,13 +1,19 @@
 # [Lottery telegram bot](https://github.com/h0riz4n/lottery_bot)
 ![Иллюстрация к проекту](https://github.com/h0riz4n/lottery_bot/blob/main/picture.png)
-> Telegram bot for making lottery with users in telegram.
+> Телеграм бот для проведения лотереи среди пользователей в телеграме.
 
-# Used technology
+# Технологии разработки
 - Python 3.10.4
-- Aiogram (framework for telegram bot)
-- Asyncpg (library for working with database)
-- Apscheduler (library for periodic tasks)
-- PostgreSQL (database)
-- Docker and docker-compose (containerization)
-- Nginx (proxy webserver)
-- Let's Encrypt (ssl certificates)
+- Aiogram (фреймворк для разработки бота)
+- Asyncpg (библиотека для работы с базой данных)
+- Apscheduler (библиотека для переодических задач)
+- PostgreSQL (СУБД)
+- Docker and docker-compose (ПО для контейнеризации)
+- Nginx (прокси-сервер)
+- Let's Encrypt (центр сертификации)
+
+# Как установить и запустить бота?
+
+> Все найстроки будут проведены на системе Linux с суперпользователя **root**. Для развёртывания рекомендуется проводить найстроки и установку, cоздав учетную запись без прав root.
+
+Прежде всего необходимо обновить действующий список пакетов ```sudo apt update```
