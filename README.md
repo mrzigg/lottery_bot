@@ -16,4 +16,7 @@
 
 > Все найстроки будут проведены на системе Linux с суперпользователя **root**. Для развёртывания рекомендуется проводить найстроки и установку, cоздав учетную запись без прав root.
 
-Прежде всего необходимо обновить действующий список пакетов ```sudo apt update```\nЗатем установите несколько обязательных пакетов, которые позволяют aptиспользовать пакеты через HTTPS:\n```sudo apt install apt-transport-https ca-certificates curl software-properties-common```
+Прежде всего необходимо обновить действующий список пакетов ```sudo apt update```
+
+Затем установите несколько обязательных пакетов, которые позволяют aptиспользовать пакеты через HTTPS:
+```sudo apt install apt-transport-https ca-certificates curl software-properties-common```
