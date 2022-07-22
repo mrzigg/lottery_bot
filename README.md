@@ -12,11 +12,35 @@
 - Nginx (прокси-сервер)
 - Let's Encrypt (центр сертификации)
 
+
 # Как установить и запустить бота?
 
-> Все найстроки будут проведены на системе Linux с суперпользователя **root**. Для развёртывания рекомендуется проводить найстроки и установку, cоздав учетную запись без прав root.
+> Все найстроки будут проведены на системе Linux с пользователя без прав **root**. Для развёртывания рекомендуется проводить найстроки и установку, cоздав учетную запись без прав root.
 
-Прежде всего необходимо обновить действующий список пакетов ```sudo apt update```
+Прежде всего необходимо обновить действующий список пакетов: `sudo apt update`
 
-Затем установите несколько обязательных пакетов, которые позволяют aptиспользовать пакеты через HTTPS:
-```sudo apt install apt-transport-https ca-certificates curl software-properties-common```
+Затем установите несколько обязательных пакетов, которые позволяют aptиспользовать пакеты через HTTPS:  
+
+`sudo apt install apt-transport-https ca-certificates curl software-properties-common`
+
+Затем добавьте в свою систему ключ GPG для официального репозитория Docker:
+
+`curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
+
+Добавьте репозиторий Docker в источники APT:
+
+`sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"`
+
+- [x] **Установим Docker:**
+
+`sudo apt install docker-ce`
+
+Для установки docker-compose пропишите следующую команду: `pip install docker-compose`
+
+Теперь для того, чтобы начать развёртывать приложение необходимо будет создать директорию `mkdir tg_bot` и переходим в неё 
+
+`cd && cd tg_bot`
+
+После прописываем следущую команду, чтобы скопировать репозиторий github:
+
+`git clone https://github.com/h0riz4n/lottery_bot`
