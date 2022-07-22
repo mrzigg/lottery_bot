@@ -56,4 +56,4 @@
 
 ### В папке nginx-conf должен всегда находиться один файл nginx.conf. Все изменения введутся только в одном файле.
 
-После того как мы ввели новую конфигурацию для `nginx.conf` и в файле ./config/webhook_
+После того как мы ввели новую конфигурацию для `nginx.conf` и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [теже параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py)
