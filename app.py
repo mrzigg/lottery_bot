@@ -14,8 +14,6 @@ import buttons.bonus_tickets
 import buttons.ending_time
 from functions.sendig_message import *
 
-import buttons.any_type
-
 logging.basicConfig(format=u'%(filename)+13s [LINE:%(lineno)-4s] %(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO)
 
 async def on_startup(dp):
