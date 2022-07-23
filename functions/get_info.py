@@ -16,14 +16,12 @@ class Giving_information:
 
     async def getting_information(self, user_id):       
         self.date = datetime.strftime(await lot_db.get_date(), '%d.%m.%Y в %H:%M')    
-        self.tickets_sp = await tick_db.get_tickets(user_id)
-        if len(self.tickets_sp) != 0:
-            self.tickets_amount = len(self.tickets_sp)
-        else:
-            self.tickets, self.tickets_amount = "", 0
+        self.tickets_amount = await tick_db.get_tickets(user_id)
 
     async def my_tickets(self, user_id):
-        ticket_sp = await tick_db.get_tickets(user_id)
-        self.user_ticket_amount, self.user_tickets = len(ticket_sp), ""    
-        for row in ticket_sp:
-            self.user_tickets += f"🎫{str(row)}\n"
+        tickets = await tick_db.all_tickets(user_id)
+        ticket = list()
+        for row in tickets:
+            ticket.append(str(row[0]))
+        self.ticket_text = ', '.join(ticket)
+        self.ticket_count = len(ticket)
