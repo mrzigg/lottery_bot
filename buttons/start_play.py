@@ -14,22 +14,26 @@ import database.lottery_db as lot_db
 import database.users_db as db
 from menu.inline.play_board import play_board
 from menu.inline.check_follow_board import Subscription_Menu_2
+from functions.lottery_routin import LotRoutin
 
+lotrout = LotRoutin()
 
 @dp.message_handler(text="Начать🔥")
 async def start_play_message(message: types.Message):
     lottery = await lot_db.lottery_exists()
     if not lottery:
-        return await bot.send_message(message.from_user.id, "<b>Розыгрыш уже завершен.</b>\n\nНо мы уже готовым к запуску новый розыгрыш с безумно крутыми призами!\n\nНужно чуть-чуть подождать🎁\n\nСовсем чуть-чуть☺️",
+        return await message.answer("<b>Розыгрыш уже завершен.</b>\n\nНо мы уже готовым к запуску новый розыгрыш с безумно крутыми призами!\n\nНужно чуть-чуть подождать🎁\n\nСовсем чуть-чуть☺️",
         reply_markup=types.ReplyKeyboardRemove())
     else:
-        if not lottery[9]:
-            await bot.send_message(message.from_user.id, f"<b>{lottery[8]}🔥</b>\n\n<b>Главный приз розыгрыша: {lottery[3]}💰</b>\n\n<b>Описание розыгрыша📝</b>\n{lottery[4]}\n\n<b>Дата окончания розыгрыша {datetime.strftime(lottery[7], '%d.%m.%Y в %H:%M')}</b>",
+        lotrout.lottery_message(lottery=lottery)
+        try:
+            photo = "https://ae01.alicdn.com/kf/HTB1kzE4cxWYBuNjy1zkq6xGGpXac/Nyfundas-iPhone-X.jpg"
+            await message.answer_photo(photo, f"<b>{lottery[8]}🔥</b>\n\n<b>Главные призы розыгрыша:\n{lotrout.main_prize}</b>\n\n<b>Описание розыгрыша📝</b>\n{lottery[4]}\n\n<b>Дата окончания розыгрыша {datetime.strftime(lottery[7], '%d.%m.%Y в %H:%M')}</b>\n\nНаш робот выберет победителя с помощью рандома. Проверит подписку и сразу же отправит результаты розыгрыша всем участникам.\n\nНажми кнопку <b>Я в деле👇 </b>",
             reply_markup=play_board)
-        else:
-            await bot.send_photo(message.from_user.id, lottery[9], f"<b>{lottery[8]}🔥</b>\n\n<b>Главный приз розыгрыша: {lottery[3]}💰</b>\n\n<b>Описание розыгрыша📝</b>\n{lottery[4]}\n\n<b>Дата окончания розыгрыша {datetime.strftime(lottery[7], '%d.%m.%Y в %H:%M')}</b>\n\nНаш робот выберет победителя с помощью рандома. Проверит подписку и сразу же отправит результаты розыгрыша всем участникам.\n\nНажми кнопку <b>Я в деле👇 </b>",
+        except:
+            await message.answer(f"<b>{lottery[8]}🔥</b>\n\n<b>Главные призы розыгрыша:\n{lotrout.main_prize}</b>\n\n<b>Описание розыгрыша📝</b>\n{lottery[4]}\n\n<b>Дата окончания розыгрыша {datetime.strftime(lottery[7], '%d.%m.%Y в %H:%M')}</b>",
             reply_markup=play_board)
-            scheduler.add_job(remind_push_button, "date", run_date=(datetime.now() + timedelta(minutes=5)), args=(message.from_user.id,))
+        return scheduler.add_job(remind_push_button, "date", run_date=(datetime.now() + timedelta(minutes=5)), args=(message.from_user.id,))
 
 
 async def remind_push_button(user_id):
