@@ -24,23 +24,23 @@ async def button_status(user_id):
 
 async def update_button(user_id, status):
     async with db.pool.acquire() as con:
-        await con.execute(''' UPDATE tg_users SET button = $1 WHERE id = $2 ''', status, user_id)
+        await con.execute(''' UPDATE tg_users SET button = $1 WHERE id = $2 AND customer_id = $3 AND bot_id = $4 ''', status, user_id, customer_id, bot_id)
 
 async def update_gender(user_id, gender):
     async with db.pool.acquire() as con:
-        await con.execute(''' UPDATE tg_users SET is_male = $1 WHERE id = $2 ''', gender, user_id)
+        await con.execute(''' UPDATE tg_users SET is_male = $1 WHERE id = $2 AND customer_id = $3 AND bot_id = $4 ''', gender, user_id, customer_id, bot_id)
 
 async def update_age(user_id, age: str):
     async with db.pool.acquire() as con:
-        await con.execute(''' UPDATE tg_users SET age_range = $1 WHERE id = $2 ''', age, user_id)
+        await con.execute(''' UPDATE tg_users SET age_range = $1 WHERE id = $2 AND customer_id = $3 AND bot_id = $4 ''', age, user_id, customer_id, bot_id)
 
 async def update_country(user_id, country: str):
     async with db.pool.acquire() as con:
-        await con.execute(''' UPDATE tg_users SET country = $1 WHERE id = $2 ''', country, user_id)
+        await con.execute(''' UPDATE tg_users SET country = $1 WHERE id = $2 AND customer_id = $3 AND bot_id = $4 ''', country, user_id, customer_id, bot_id)
 
 async def all_users():
     async with db.pool.acquire() as con:
-        return await con.fetch(''' SELECT id FROM tg_users ''')
+        return await con.fetch(''' SELECT id FROM tg_users WHERE customer_id = $1 AND bot_id = $2 ''', customer_id, bot_id)
 
 async def get_button_status(user_id):
     async with db.pool.acquire() as con:
@@ -48,4 +48,8 @@ async def get_button_status(user_id):
 
 async def update_button_2(user_id):
     async with db.pool.acquire() as con:
-        await con.execute(''' UPDATE tg_users SET button_2 = True WHERE id = $1 ''', user_id)
+        await con.execute(''' UPDATE tg_users SET button_2 = True WHERE id = $1 AND customer_id = $2 AND bot_id = $3 ''', user_id, customer_id, bot_id)
+
+async def existing_link(user_id):
+    async with db.pool.acquire() as con:
+        return await con.fetchrow(''' SELECT * FROM tg_users WHERE id = $1 AND customer_id = $2 AND bot_id = $3 ''', user_id, customer_id, bot_id)

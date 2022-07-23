@@ -1,3 +1,5 @@
+from .main_data import customer_id, bot_id, raffle_id
+
 import os
 import sys
 import inspect
@@ -10,12 +12,8 @@ from config.load_all import db
 
 async def lottery_exists():
     async with db.pool.acquire() as con:
-        return await con.fetchrow(''' SELECT * FROM raffles ''')
-
-async def photo_exists():
-    async with db.pool.acquire() as con:
-        return await con.fetchval(''' SELECT photo FROM raffles ''')
+        return await con.fetchrow(''' SELECT * FROM raffles WHERE customer_id = $1 AND bot_id = $2 AND id = $3 ''', customer_id, bot_id, raffle_id)
 
 async def get_date():
     async with db.pool.acquire() as con:
-        return await con.fetchval(''' SELECT end_timestamp FROM raffles ''')
+        return await con.fetchval(''' SELECT end_timestamp FROM raffles WHERE customer_id = $1 AND bot_id = $2 AND id = $3 ''', customer_id, bot_id, raffle_id)
