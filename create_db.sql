@@ -253,7 +253,7 @@ create function tickets_id_seq() returns trigger as $$
             where
                 customer_id = new.customer_id and
                 bot_id = new.bot_id and
-                raffle_id - new.raffle_id);
+                raffle_id = new.raffle_id);
         end if;
         return new;
     end;
