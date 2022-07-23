@@ -12,8 +12,12 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from config.load_all import bot
+from functions.make_links import Channel_link
+
+func = Channel_link()
 
 class PrivateFilter(BoundFilter):
+
     async def check(self, message: types.Message):
         status = bool(True)
         user_status = bool(False)
@@ -27,8 +31,6 @@ class PrivateFilter(BoundFilter):
         if status is True:
             return True
         else:
-            links = ""
-            for row in CHANNELS:
-                links += f"@{row}\n"
-            await bot.send_message(message.from_user.id, f'<b>Вы не подписаны на канал❌</b>\n{links}')
-            return None
+            func.make_links()
+            await bot.send_message(message.from_user.id, f'<b>Убедитесь, что Вы подписаны на эти каналы❌</b>\n{func.links}')
+            return False
