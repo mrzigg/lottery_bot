@@ -35,3 +35,7 @@ async def ten_tickets(user_id):
         ($1, $2, $3, NULL, $4), ($1, $2, $3, NULL, $4), ($1, $2, $3, NULL, $4), ($1, $2, $3, NULL, $4), ($1, $2, $3, NULL, $4)
         RETURNING id
         ''', customer_id, bot_id, raffle_id, user_id)
+
+async def find_winner(id):
+    async with db.pool.acquire() as con:
+        return await con.fetchval(''' SELECT tg_user_id FROM tickets WHERE id = $1 AND customer_id = $2 AND bot_id = $3 ''', id, customer_id, bot_id)
