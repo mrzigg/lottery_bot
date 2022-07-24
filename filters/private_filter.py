@@ -19,18 +19,10 @@ func = Channel_link()
 class PrivateFilter(BoundFilter):
 
     async def check(self, message: types.Message):
-        status = bool(True)
-        user_status = bool(False)
         for row in CHANNELS:
             user_channel_status = await bot.get_chat_member(chat_id=f"@{row}", user_id=message.from_user.id)
             if user_channel_status['status'] == "left":
-                user_status = bool(False)
-            else:
-                user_status = bool(True)
-            status = bool(status*user_status)
-        if status is True:
-            return True
-        else:
-            func.make_links()
-            await bot.send_message(message.from_user.id, f'<b>Убедитесь, что Вы подписаны на эти каналы❌</b>\n{func.links}')
-            return False
+                func.make_links()
+                await bot.send_message(message.from_user.id, f'<b>Убедитесь, что Вы подписаны на эти каналы❌</b>\n{func.links}')
+                return False
+        return True
