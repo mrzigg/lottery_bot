@@ -30,7 +30,7 @@ async def in_call_back(callback_query: types.CallbackQuery):
     channel_link.make_links()
     await bot.send_message(callback_query.from_user.id, f"Для участия в розыгрыше <b>подпишись</b> на наши каналы:\n\n{channel_link.links}\n\nПосле того как ты подпишешься -<b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.",
     reply_markup=Subscription_Menu_2)
-    await Routins().edit_callback(call=callback_query)
+    await Routins.edit_callback(call=callback_query)
     
     lottery = await lot_db.lottery_exists()
     finish_date = lottery[7]
@@ -48,14 +48,14 @@ async def in_call_back(callback_query: types.CallbackQuery):
 async def Lets_fix(call: types.CallbackQuery):
     channel_link.make_links()
     await bot.send_message(call.from_user.id, f'Для участия в розыгрыше <b>подпишись</b> на наш канал:\n{channel_link.links}\n\nПосле того как ты подпишешься - <b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.', reply_markup=Subscription_Menu_2)
-    await Routins().edit_callback(call=call)
+    await Routins.edit_callback(call=call)
 
 
 @dp.callback_query_handler(text="participation")
 async def Participation(call: types.CallbackQuery):
     channel_link.make_links()
     await bot.send_message(call.from_user.id, f'Для участия в розыгрыше <b>подпишись</b> на наш канал:\n{channel_link.links}\n\nПосле того как ты подпишешься - <b> нажми кнопку</b> “Проверить подписку”\n\n🔎Робот проверит подписку и выдаст лотерейный билет.', reply_markup=Subscription_Menu)
-    await Routins().edit_callback(call=call)
+    await Routins.edit_callback(call=call)
 
 
 @dp.callback_query_handler(DuringSub2(), text="check_subscription")
@@ -65,4 +65,4 @@ async def Check_subscription(call: types.CallbackQuery):
     await bot.send_message(call.message.chat.id, f"<b>Робот всё проверил - всё отлично)</b>\n\nТеперь ты участник розыгрыша!\n\nКак мы и обещали ты получаешь вместо 1 лотерейного билета целых 10 штук)\n\n🎫 Номера твоих лотерейных билетов:{func.id_list}")
     await bot.send_message(call.from_user.id, "Кстати, ты можешь получить <b>+1 лотерейный билет!</b>\n\n<b>Просто ответь на вопрос:</b> Ты парень или девушка?\n\n<i>P.S.Твои ответы позволят нам понять, как в следующий раз сделать розыгрыш еще интереснее)</i>",
     reply_markup=gender_board)
-    await Routins().edit_callback(call=call)
+    await Routins.edit_callback(call=call)
