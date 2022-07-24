@@ -22,9 +22,9 @@ async def all_tickets(user_id):
     async with db.pool.acquire() as con:
         return await con.fetch(''' SELECT id FROM tickets WHERE tg_user_id = $1 AND customer_id = $2 AND bot_id = $3 AND raffle_id = $4 ''', user_id, customer_id, bot_id, raffle_id)
 
-async def last_ticket(user_id):
+async def last_ticket():
     async with db.pool.acquire() as con:
-        return await con.fetchval(''' SELECT id FROM tickets WHERE tg_user_id = $1 AND customer_id = $2 AND bot_id = $3 AND raffle_id = $4 ORDER BY id DESC LIMIT 1 ''', user_id, customer_id, bot_id, raffle_id)
+        return await con.fetchval(''' SELECT id FROM tickets WHERE customer_id = $1 AND bot_id = $2 AND raffle_id = $3 ORDER BY id DESC LIMIT 1 ''', customer_id, bot_id, raffle_id)
 
 async def ten_tickets(user_id):
     async with db.pool.acquire() as con:

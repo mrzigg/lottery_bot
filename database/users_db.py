@@ -54,6 +54,6 @@ async def existing_link(user_id):
     async with db.pool.acquire() as con:
         return await con.fetchrow(''' SELECT * FROM tg_users WHERE id = $1 AND customer_id = $2 AND bot_id = $3 ''', user_id, customer_id, bot_id)
 
-async def all_winners(amount: int):
+async def all_winners(amount: int, winners: list):
     async with db.pool.acquire() as con:
-        return await con.fetch(f''' SELECT id  FROM tg_users WHERE customer_id = $1 AND bot_id = $2 AND button_2 = True LIMIT 100 OFFSET {str(amount)}''', customer_id, bot_id)
+        return await con.fetch(''' SELECT id FROM tg_users WHERE customer_id = $1 AND bot_id = $2 AND button_2 = True AND id != ANY($3::bigint[]) LIMIT 1000 OFFSET $4 ''', customer_id, bot_id, winners, amount)
