@@ -9,7 +9,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from config.load_all import dp, bot
-from filters.private_filter import PrivateFilter
 import database.users_db as db
 import database.tickets_db as ticket_db
 from menu.reply.user_menu import keyboard
