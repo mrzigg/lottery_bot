@@ -1,18 +1,25 @@
 from aiogram.utils.executor import start_webhook
 import logging
 
+from variables import end_timestamp
 from config.load_all import dp, scheduler
 import config.load_all as cfg
 
 import commands.start
+import commands.channels
+import commands.raffle
 import buttons.start_play
 import buttons.i_am_in
 import buttons.my_tickets
 import buttons.check_subscription
-import buttons.age_country
+import buttons.sub_during
+import buttons.age
+import buttons.country
 import buttons.bonus_tickets
 import buttons.ending_time
-from functions.sendig_message import *
+
+from functions.sending_message import *
+from buttons.win_fuction import find_winner_function
 
 logging.basicConfig(format=u'%(filename)+13s [LINE:%(lineno)-4s] %(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO)
 
@@ -22,6 +29,7 @@ async def on_startup(dp):
     logging.warning("AsyncIOScheduler is active")
     await cfg.db.create_pool()
     logging.warning("Database connection is opened")
+    scheduler.add_job(find_winner_function, run_date=end_timestamp)
     scheduler.add_job(sending_message, "interval", days=1)
     logging.warning("Sending tasks is active")
 
