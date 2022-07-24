@@ -1,4 +1,3 @@
-from datetime import datetime
 from aiogram import types
 from aiogram.dispatcher.filters import CommandStart
 import aiogram.utils.markdown as fmt
@@ -11,19 +10,15 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-from variables import end_timestamp
+from filters.time_filter import TimeFilter
 from config.load_all import dp, bot
 import database.users_db as db
 import database.tickets_db as ticket_db
 from menu.reply.start_board import start_menu
 from menu.reply.user_menu import keyboard
 
-@dp.message_handler(CommandStart())
+@dp.message_handler(TimeFilter(), CommandStart())
 async def start_command(message: types.Message):
-    if datetime.now() >= end_timestamp:
-        return await message.answer("<b>Розыгрыш уже завершен.</b>\n\nНо мы уже готовым к запуску новый розыгрыш с безумно крутыми призами!\n\nНужно чуть-чуть подождать🎁\n\nСовсем чуть-чуть☺️",
-        reply_markup=types.ReplyKeyboardRemove())
-    else:
         if not await db.user_exists(message.from_user.id):
             if message.get_args() != "":
                 await db.add_user(message.from_user.id, int(message.get_args()))
