@@ -8,6 +8,7 @@ sys.path.insert(0, parentdir)
 
 import database.tickets_db as db
 
+
 class MakeTickets:
     
     async def make_ten_tickets(self, user_id):
