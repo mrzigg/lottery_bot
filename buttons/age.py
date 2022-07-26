@@ -30,6 +30,6 @@ async def age_callback_data(callback_query: types.CallbackQuery):
         await db.update_age(callback_query.from_user.id, "45+")
     await Routins.edit_callback(call=callback_query)
     ticket = await ticket_db.add_user(callback_query.from_user.id)
-    text=f"<b>Это наверное самый крутой возраст!</b>\n\nДержи <b>+1</b> лотерейный билет\n🎫 Номера билетов: <b>{ticket}</b>\n\nВсего лотерейных билетов: <b>3</b>\n\nУ меня остался последний вопрос - и еще <b>1 </b> лотерейный билет 😌"
+    text=f"<b>Это наверное самый крутой возраст!</b>\n\nДержи <b>+1</b> лотерейный билет\n🎫 Номер билета: <b>{ticket}</b>\n\nВсего лотерейных билетов: <b>3</b>\n\nУ меня остался последний вопрос - и еще <b>1 </b> лотерейный билет 😌"
     await Routins.edit_call_text(callback_query=callback_query, text=text)
     return await bot.send_message(callback_query.from_user.id, "<b>Из какой ты страны?</b>", reply_markup=country_board)
