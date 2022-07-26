@@ -1,5 +1,5 @@
-from aiogram import types
 from aiogram.dispatcher.filters import BoundFilter
+from aiogram import types
 
 from .channels import CHANNELS
 
@@ -23,6 +23,7 @@ class DuringSub(BoundFilter):
     async def check(self, call: types.CallbackQuery):
         for row in CHANNELS:
             user_channel_status = await bot.get_chat_member(chat_id=f"@{row}", user_id=call.from_user.id)
+            print(user_channel_status)
             if user_channel_status['status'] == "left":
                 func.make_links()
                 await bot.delete_message(call.from_user.id, call.message.message_id)
