@@ -8,6 +8,7 @@ sys.path.insert(0, parentdir)
 
 from filters.channels import CHANNELS
 
+
 class Channel_link:
 
     def make_links(self):
