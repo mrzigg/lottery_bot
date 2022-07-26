@@ -1,6 +1,5 @@
-import logging
-from aiogram import types
 from random import randint
+import logging
 
 import os
 import sys
@@ -10,10 +9,12 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-from config.load_all import bot
-import database.lottery_db as lot_db
 import database.users_db as user_db
+import database.lottery_db as lot_db
 import database.tickets_db as ticket_db
+
+from config.load_all import bot
+from database.main_data import customer_id, bot_id, raffle_id
 
 
 async def find_winner_function():
@@ -35,21 +36,14 @@ async def find_winner_function():
             loosers_sp.append(row[0])
             for rows in loosers_sp:
                 try:
-                    tickets_text = ', '.join(winner_ticket)
-                    await bot.send_message(int(rows), f"<b>Привет👋</b>\n\nПо окончанию розыгрыша, я считаю важным проинформировать кажодго об этом\n\nПобедителями являются обладателями данных билетов:\n🎫 {tickets_text}\n\n<b>Ждём тебя в следующем розыгрыше☺️</b>")
+                    return await bot.send_message(int(rows), f"<b>Розыгрыш завершен!</b>\n\nРезультаты розыгрыша здесь:\n👉 https://go.telegiv.com/results/{customer_id}.{bot_id}.{raffle_id}/\n\nСовсем скоро будет новый розыгрыш и призы будут еще круче 🎁", disable_web_page_preview=True)
                 except Exception as e:
                     logging.warning(e)
-                    pass
         if not loosers:
             break
         i += 1
     for row in winners_sp:
         try:
-            prizes_text = ""
-            for row in prizes_list:
-                prizes_text += f"🎁 {row}\n"
-            await bot.send_message(int(row), f"<b>Привет👋</b>\n\n<b>Ты являешься победителем!\nИ это не шутки</b>\n\nОдин из призов уйдёт тебе. Поэтому можешь насладиться этим моментом, а я тебе напоминаю, о призах розыгрыша:\n{prizes_text}")
-            await bot.send_sticker(int(row), "CAACAgIAAxkBAAEFXW5i3SDXYQABm931LEF5UPb13Ctdg30AAg0BAAJWnb0KRv1DHQVE15cpBA")
+            return await bot.send_message(int(row), f"<b>Розыгрыш завершен!</b>\n\nРезультаты розыгрыша здесь:\n👉 https://go.telegiv.com/results/{customer_id}.{bot_id}.{raffle_id}/\n\nСпойлер: Ты выиграл 🥳\n\nСовсем скоро будет новый розыгрыш!", disable_web_page_preview=True)
         except Exception as e:
             logging.warning(e)
-            pass
