@@ -21,7 +21,7 @@ class Giving_information:
     async def my_tickets(self, user_id):
         tickets = await tick_db.all_tickets(user_id)
         ticket = list()
-        for row in tickets:
+        for row in tickets: 
             ticket.append(str(row[0]))
         self.ticket_text = ', '.join(ticket)
         self.ticket_count = len(ticket)
