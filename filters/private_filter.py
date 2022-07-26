@@ -1,5 +1,5 @@
-from aiogram import types
 from aiogram.dispatcher.filters import BoundFilter
+from aiogram import types
 
 from .channels import CHANNELS
 
@@ -16,6 +16,7 @@ from functions.make_links import Channel_link
 
 func = Channel_link()
 
+
 class PrivateFilter(BoundFilter):
 
     async def check(self, message: types.Message):
@@ -23,6 +24,6 @@ class PrivateFilter(BoundFilter):
             user_channel_status = await bot.get_chat_member(chat_id=f"@{row}", user_id=message.from_user.id)
             if user_channel_status['status'] == "left":
                 func.make_links()
-                await bot.send_message(message.from_user.id, f'<b>Убедитесь, что Вы подписаны на эти каналы❌</b>\n{func.links}')
+                await bot.send_message(message.from_user.id, f'<b>Убедитесь, что Вы подписаны на эти каналы ❌</b>\n{func.links}')
                 return False
         return True
