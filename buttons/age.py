@@ -16,7 +16,7 @@ from functions.message_routins import Routins
 from menu.inline.contry_board import country_board
 
 
-@dp.callback_query_handler(text_contains="age_")
+@dp.callback_query_handler(text_startswith="age_")
 async def age_callback_data(callback_query: types.CallbackQuery):
     if callback_query.data == "age_18":
         await db.update_age(callback_query.from_user.id, "до 18")
