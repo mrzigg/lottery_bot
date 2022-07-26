@@ -1,0 +1,5 @@
+WEBHOOK_HOST = 'https://example.ru'
+WEBHOOK_PATH = '/telegram_bot'
+WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+WEBAPP_HOST = '0.0.0.0' 
+WEBAPP_PORT = 3001
