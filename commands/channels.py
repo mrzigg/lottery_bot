@@ -20,5 +20,5 @@ func = Channel_link()
 @dp.message_handler(TimeFilter(), Command("channels", ignore_caption=False))
 async def channels_command(message: types.Message):
     func.make_links()
-    await message.answer(f"<b>Спонсоры розыгрыша:</b>\n{func.links}\n\nP.S.\nУчастники розыгрыша без подписки на каналы спонсоров теряют возможность участия в розыгрыше.",
+    await message.answer(f"<b>Спонсоры розыгрыша:</b>\n{func.links}\n\nP.S.\nБез подписки на каналы спонсоров теряется возможность участия в розыгрыше.",
     reply_markup=keyboard)
