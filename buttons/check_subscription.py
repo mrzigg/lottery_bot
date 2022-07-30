@@ -23,7 +23,7 @@ async def callback_check_in(callback_query: types.CallbackQuery):
     await db.update_button_2(callback_query.from_user.id)
     ticket = await ticket_db.add_user(callback_query.from_user.id)
     await bot.send_message(callback_query.from_user.id, f"<b>Отлично!</b>\nРобот всё проверил - всё отлично)\n\n<b>Теперь ты участник розыгрыша!</b>\n\n🎫 Номер лотерейного билета: <b>{ticket}</b>", reply_markup=types.ReplyKeyboardRemove())
-    await Routins.routin_callback(callback_query=callback_query) 
+    await Routins.edit_callback(callback_query=callback_query) 
     return await bot.send_message(callback_query.from_user.id, "Кстати, ты можешь получить <b>+1 лотерейный билет!</b>\n\n<b>Просто ответь на вопрос:</b> Ты парень или девушка?\n\n<i>P.S.Твои ответы позволят нам понять, как в следующий раз сделать розыгрыш еще интереснее)</i>",
     reply_markup=gender_board)
 
