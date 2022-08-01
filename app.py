@@ -9,6 +9,7 @@ from config.load_all import dp, scheduler
 import commands.start
 import commands.raffle
 import commands.channels
+import commands.admin
 
 import buttons.age
 import buttons.country
