@@ -39,9 +39,7 @@
 
 `sudo apt install docker-ce`
 
-Для установки docker-compose пропишите следующие команды: 
-
-`sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+Для установки docker-compose пропишите следующие команды: `sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
 
 `sudo chmod +x /usr/local/bin/docker-compose`
 
@@ -90,7 +88,7 @@
 
 `git clone https://github.com/h0riz4n/lottery_bot`
 
-> Либо же можете установить FileZilla, ввести в неё все необходимые данные сервера: ip-адрес, логин (root), пароль, порт (22) и через приложение вручную перенести файлы на сервер в директорию telegram_bot.
+> Либо же можете установить FileZilla, ввести в неё все необходимые данные сервера: ip-адрес, логин (root), пароль, порт (22) и через приложение вручную перенести файлы на сервер.
 
 Далее необходимо установить **nginx**: `sudo apt install nginx`
 
