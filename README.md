@@ -83,11 +83,119 @@
 ### И телеграм бот теперь запущен и готов к работе!
 
 # Запуск бота на Localhost. (Nginx и Let's Encrypt)
+
 Прежде всего необходимо обновить действующий список пакетов: `sudo apt update`
+
+После прописываем следущую команду, чтобы скопировать репозиторий github:
+
+`git clone https://github.com/h0riz4n/lottery_bot`
+
+> Либо же можете установить FileZilla, ввести в неё все необходимые данные сервера: ip-адрес, логин (root), пароль, порт (22) и через приложение вручную перенести файлы на сервер в директорию telegram_bot.
 
 Далее необходимо установить **nginx**: `sudo apt install nginx`
 
-![image](https://user-images.githubusercontent.com/100841904/183038335-098bc58a-5ca2-4204-a78c-ec0e8223af4e.png)
+Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw app list`
+> Вывод должен быть следующим:
+![image](https://user-images.githubusercontent.com/100841904/183039107-b6e6e757-8ab0-462c-b31d-dc45de116d93.png)
 
+Далее необходимо будет открыть **80 порт**: `sudo ufw allow 'Nginx HTTP'`
+
+Перезапускаем **ufw**: `sudo ufw enable`
+
+Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw status`
+> Вывод должен быть следующим:
+![image](https://user-images.githubusercontent.com/100841904/183040055-050fff1e-a5a1-4d87-8b64-86889f28e65b.png)
+
+Также проверим статус **nginx**: `systemctl status nginx`
+> Должно вывести следующее:
+![image](https://user-images.githubusercontent.com/100841904/183040428-0011c696-4698-4137-9e6c-94c2fc88c24b.png)
+
+Далее создадим каталог для your_domain, используя **-p** флаг для создания любых необходимых родительских каталогов: `sudo mkdir -p /var/www/your_domain/html`
+
+Затем назначаем право собственности на каталог с $USER помощью переменной среды: `sudo chown -R $USER:$USER /var/www/your_domain/html`   
+
+Проверим необходимые разрешения: `sudo chmod -R 755 /var/www/your_domain` 
+
+Создадим образец _index.html_: `sudo nano /var/www/your_domain/html/index.html`
+Внутри добавляем следующее:
+ <html>
+     <head>
+         <title>Welcome to your_domain!</title>
+     </head>
+     <body>
+         <h1>Success!  The your_domain server block is working!</h1>
+     </body>
+ </html>
+
+Открываем конфигурацию нашего сервера: `sudo nano /etc/nginx/sites-available/your_domain`
+Внутри прописываем следующее:
+server {
+        listen 80;
+        listen [::]:80;
+        root /var/www/your_domain/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name your_domain www.your_domain;
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+> Не забываем везде изменить **your_domain** на имя вашего домена
+
+Далее включим файл, создав из него ссылку на sites-enabled каталог: `sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/`
+
+Далее в файле `/etc/nginx/nginx.conf` убираем комментарий со строки: `server_names_hash_bucket_size 64;`
+
+Проверяем, что ошибок нет: `sudo nginx -t`
+
+И перезапускаем **nginx**: `sudo systemctl restart nginx`
+
+## Работаем с let's encrypt:
+
+В начале устанавливаем certbot: `sudo apt install certbot python3-certbot-nginx`
+
+Разрешаем трафик **HTTPS**: `sudo ufw allow 'Nginx Full'`
+
+`sudo ufw delete allow 'Nginx HTTP'`
+
+Разрешаем серверу прослушивать **80** и **443** порты: 
+- `sudo ufw allow http`
+- `sudo ufw allow 80`
+- `sudo ufw allow https`
+- `sudo ufw allow 443`
+
+Получаем сертификаты (вместо example.com указываем **имя домена**): `sudo certbot --nginx -d example.com -d www.example.com` 
+
+> Certbot запросит у вас адрес эл. почты (можно указать любой), принять условия обслуживания и предпочитаемый вариант настройки. Выбираем предпочитаемый вариант и, при успешной установке, вывод должен быть следующим:
+![image](https://user-images.githubusercontent.com/100841904/183045729-875ed73b-a546-4e67-9e1e-acde6a07d496.png)
+
+Далее открываем **nginx.conf** в каталоге `/etc/nginx`: `sudo nano /etc/nginx/nginx.conf`
+Внутри вводим [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_3.conf) и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [нужные параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py), а именно:
+- WEBHOOK_HOST - имя вашего домена
+- WEBHOOK_PATH - рабочая директория (/telegram_bot/)
+- WEBAPP_HOST - ip-адрес (127.0.0.1)
+- WEBAPP_PORT - порт (3001)
+
+Далее необходимо установить все необходимые [библиотеки](https://github.com/h0riz4n/lottery_bot/blob/main/requirements.txt)
+- `sudo apt-get install python3-pip`
+-  `pip install aiogram`
+-  `pip install asyncpg`
+-  `pip install apscheduler`
+
+Создаём сервис бота: `cd ../ && cd etc/systemd/system && nano bot.service`
+Внутри прописываем следующее:
+ [Service]
+ WorkingDirectory=/root/telegram_bot
+ User=root
+ ExecStart=python3 /root/telegram_bot/bot.py
+ [Install]
+ WantedBy=multi-user.target
+ EOF
+
+> Обращайте внимание на директории и названия файлов (должны совпадать с вашим расположением файлов)
+
+Далее запускаем бота: `systemctl enable bot`
+
+`systemctl start bot`
 
 > Бот расчитан на то, что база данных будет находиться удалённо от бота, поэтому образы **PostgreSQL** не были добавлены в файл `docker-compose.yml`
