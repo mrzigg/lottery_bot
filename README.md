@@ -104,10 +104,12 @@
 
 Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw status`
 > Вывод должен быть следующим:
+
 ![image](https://user-images.githubusercontent.com/100841904/183040055-050fff1e-a5a1-4d87-8b64-86889f28e65b.png)
 
 Также проверим статус **nginx**: `systemctl status nginx`
 > Должно вывести следующее:
+
 ![image](https://user-images.githubusercontent.com/100841904/183040428-0011c696-4698-4137-9e6c-94c2fc88c24b.png)
 
 Далее создадим каталог для your_domain, используя **-p** флаг для создания любых необходимых родительских каталогов: `sudo mkdir -p /var/www/your_domain/html`
@@ -117,28 +119,10 @@
 Проверим необходимые разрешения: `sudo chmod -R 755 /var/www/your_domain` 
 
 Создадим образец _index.html_: `sudo nano /var/www/your_domain/html/index.html`
-Внутри добавляем следующее:
- <html>
-     <head>
-         <title>Welcome to your_domain!</title>
-     </head>
-     <body>
-         <h1>Success!  The your_domain server block is working!</h1>
-     </body>
- </html>
+Внутри добавляем [следующее](https://github.com/h0riz4n/lottery_bot/blob/main/index.html)
 
-Открываем конфигурацию нашего сервера: `sudo nano /etc/nginx/sites-available/your_domain`
-Внутри прописываем следующее:
-server {
-        listen 80;
-        listen [::]:80;
-        root /var/www/your_domain/html;
-        index index.html index.htm index.nginx-debian.html;
-        server_name your_domain www.your_domain;
-        location / {
-                try_files $uri $uri/ =404;
-        }
-}
+Открываем конфигурацию нашего сервера: `sudo nano /etc/nginx/sites-available/your_domain` 
+И прописываем в нем [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_4.conf)
 
 > Не забываем везде изменить **your_domain** на имя вашего домена
 
@@ -167,6 +151,7 @@ server {
 Получаем сертификаты (вместо example.com указываем **имя домена**): `sudo certbot --nginx -d example.com -d www.example.com` 
 
 > Certbot запросит у вас адрес эл. почты (можно указать любой), принять условия обслуживания и предпочитаемый вариант настройки. Выбираем предпочитаемый вариант и, при успешной установке, вывод должен быть следующим:
+
 ![image](https://user-images.githubusercontent.com/100841904/183045729-875ed73b-a546-4e67-9e1e-acde6a07d496.png)
 
 Далее открываем **nginx.conf** в каталоге `/etc/nginx`: `sudo nano /etc/nginx/nginx.conf`
@@ -183,14 +168,7 @@ server {
 -  `pip install apscheduler`
 
 Создаём сервис бота: `cd ../ && cd etc/systemd/system && nano bot.service`
-Внутри прописываем следующее:
- [Service]
- WorkingDirectory=/root/telegram_bot
- User=root
- ExecStart=python3 /root/telegram_bot/bot.py
- [Install]
- WantedBy=multi-user.target
- EOF
+Внутри прописываем [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/bot.service)
 
 > Обращайте внимание на директории и названия файлов (должны совпадать с вашим расположением файлов)
 
