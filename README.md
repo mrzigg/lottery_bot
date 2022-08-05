@@ -92,7 +92,7 @@
 
 Далее необходимо установить **nginx**: `sudo apt install nginx`
 
-Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw app list`
+- Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw app list`
 > Вывод должен быть следующим:
 
 ![image](https://user-images.githubusercontent.com/100841904/183039107-b6e6e757-8ab0-462c-b31d-dc45de116d93.png)
@@ -101,7 +101,7 @@
 
 Перезапускаем **ufw**: `sudo ufw enable`
 
-Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw status`
+- Для того, чтобы проверить успешно ли прошла установка, можно прописать следующую команду: `sudo ufw status`
 > Вывод должен быть следующим:
 
 ![image](https://user-images.githubusercontent.com/100841904/183040055-050fff1e-a5a1-4d87-8b64-86889f28e65b.png)
@@ -117,19 +117,21 @@
 
 Затем назначаем право собственности на каталог с $USER помощью переменной среды: `sudo chown -R $USER:$USER /var/www/your_domain/html`   
 
-Проверим необходимые разрешения: `sudo chmod -R 755 /var/www/your_domain` 
+- Проверим необходимые разрешения: `sudo chmod -R 755 /var/www/your_domain` 
 
 Создадим образец _index.html_: `sudo nano /var/www/your_domain/html/index.html`
+
 Внутри добавляем [следующее](https://github.com/h0riz4n/lottery_bot/blob/main/index.html)
 
 Открываем конфигурацию нашего сервера: `sudo nano /etc/nginx/sites-available/your_domain` 
+
 И прописываем в нем [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_4.conf)
 
 Далее включим файл, создав из него ссылку на sites-enabled каталог: `sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/`
 
 Далее в файле `/etc/nginx/nginx.conf` убираем комментарий со строки: `server_names_hash_bucket_size 64;`
 
-Проверяем, что ошибок нет: `sudo nginx -t`
+- Проверяем, что ошибок нет: `sudo nginx -t`
 
 И перезапускаем **nginx**: `sudo systemctl restart nginx`
 
@@ -154,6 +156,7 @@
 ![image](https://user-images.githubusercontent.com/100841904/183045729-875ed73b-a546-4e67-9e1e-acde6a07d496.png)
 
 Далее открываем **nginx.conf** в каталоге `/etc/nginx`: `sudo nano /etc/nginx/nginx.conf`
+
 Внутри вводим [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_3.conf) и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [нужные параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py), а именно:
 - WEBHOOK_HOST - имя вашего домена
 - WEBHOOK_PATH - рабочая директория (/telegram_bot/)
@@ -167,6 +170,7 @@
 -  `pip install apscheduler`
 
 Создаём сервис бота: `cd ../ && cd etc/systemd/system && nano bot.service`
+
 Внутри прописываем [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/bot.service)
 
 > Обращайте внимание на директории и названия файлов (должны совпадать с вашим расположением файлов)
