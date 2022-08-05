@@ -106,7 +106,7 @@
 
 ![image](https://user-images.githubusercontent.com/100841904/183040055-050fff1e-a5a1-4d87-8b64-86889f28e65b.png)
 
-Также проверим статус **nginx**: `systemctl status nginx`
+- Также проверим статус **nginx**: `systemctl status nginx`
 > Должно вывести следующее:
 
 ![image](https://user-images.githubusercontent.com/100841904/183040428-0011c696-4698-4137-9e6c-94c2fc88c24b.png)
