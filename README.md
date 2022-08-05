@@ -33,24 +33,56 @@
 
 `sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"`
 
+Затем снова обновите действующий список пакетов:
+
+`sudo apt update`
+
 - [x] **Установим Docker:**
 
 `sudo apt install docker-ce`
 
-Для установки docker-compose пропишите следующую команду: `pip install docker-compose`
+Для установки docker-compose пропишите следующие команды: 
 
-Теперь для того, чтобы начать развёртывать приложение необходимо будет создать директорию `mkdir tg_bot` и переходим в неё `cd && cd tg_bot`
+`sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+
+`sudo chmod +x /usr/local/bin/docker-compose`
+
+Теперь для того, чтобы начать развёртывать приложение необходимо будет создать директорию `mkdir telegram_bot` и переходим в неё `cd && cd telegram_bot`
 
 После прописываем следущую команду, чтобы скопировать репозиторий github:
 
 `git clone https://github.com/h0riz4n/lottery_bot`
 
-И создаём директории: `mkdir views && mkdir dhparam`
+> Либо же можете установить FileZilla, ввести в неё все необходимые данные сервера (ip-адрес, логин (root), пароль, порт (22)) и через приложене вручную перенести файлы на сервер в директорию telegram_bot.
+
+И в директории telegram_bot создаём директории: `mkdir views && mkdir dhparam`
 
  ## Теперь переходим к развёртыванию нашего приложения.
  
-Прежде всего Вам будет необходимо изменить файл `./nginx-conf/nginx.conf` на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
+Прежде всего Вам будет необходимо изменить файл `./nginx-conf/nginx.conf` на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) _(не забудьте изменить в **8** строке example.com на **имя вашего домена**)_ и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
 - Небходимо будет добавить `- ./nginx-conf:/etc/nginx/conf.d` и убрать или закомментировать строку `- ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf`
+
+> Должно выглядеть так:
+ webserver:
+     image: nginx:mainline-alpine
+     container_name: webserver
+     restart: unless-stopped
+     ports:
+       - "80:80"
+       - "443:443"
+     expose:
+       - "3001"
+     extra_hosts:
+       - "site1.loc:172.17.0.1"
+     volumes:
+       - web-root:/var/www/html
+       - ./nginx-conf:/etc/nginx/conf.d
+       #- ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
+       - certbot-etc:/etc/letsencrypt
+       - certbot-var:/var/lib/letsencrypt
+       - dhparam:/etc/ssl/certs
+     networks:
+       - app-network
 
 Потом, **находясь в директории с файлом docker-compose.yml,** прописываем команду: `docker-compose up -d` _(флаг **-d** необходим, чтобы запустить развёртывание в фоновом режиме)_ 
 
@@ -58,11 +90,15 @@
 
 ### В папке nginx-conf должен всегда находиться один файл nginx.conf. Все изменения введутся только в одном файле.
 
-После того как мы ввели [новую конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf) для `nginx.conf` и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [теже параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py)
+После того как мы ввели [новую конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx.conf) для `nginx.conf` _(не забудьте изменить в **9**, **31** и **32** example.com на **имя вашего домена**)_ и необходимо убедиться, что в файле `./config/webhook_cfg.py` стоят [те же параметры](https://github.com/h0riz4n/lottery_bot/blob/main/config/webhook_cfg.py), а именно:
 
-> Так же в файле nginx.conf прошу обращать внимание на **/** в строке proxy_pass
+- WEBHOOK_HOST - имя вашего домена;
+- WEBHOOK_PATH - имя директории, в которой находится бот (в данном случае telegram_bot)
+- Остальные данные без изменений
 
-Так же пропишите команду, указав правильно директорию: `sudo openssl dhparam -out /root/bot/dhparam/dhparam-2048.pem 2048`
+> Также в файле nginx.conf прошу обращать внимание на **/** в строке proxy_pass. Если всё запустилось успешно, но бот не реагирует на сообщения, попробуйте убрать или добавить **/** в конце строки: `proxy_pass http://telegram_bot:3001/;`
+
+Также пропишите команду, указав правильно директорию: `sudo openssl dhparam -out /root/**telegram_bot**/dhparam/dhparam-2048.pem 2048`
 
 Это необходимо для создания ключа Diffie-Hellman и прямой секретности.
 
