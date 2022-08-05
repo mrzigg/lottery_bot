@@ -111,6 +111,8 @@
 
 ![image](https://user-images.githubusercontent.com/100841904/183040428-0011c696-4698-4137-9e6c-94c2fc88c24b.png)
 
+> **Не забываем везде изменять your_domain на имя вашего домена**
+
 Далее создадим каталог для your_domain, используя **-p** флаг для создания любых необходимых родительских каталогов: `sudo mkdir -p /var/www/your_domain/html`
 
 Затем назначаем право собственности на каталог с $USER помощью переменной среды: `sudo chown -R $USER:$USER /var/www/your_domain/html`   
@@ -122,8 +124,6 @@
 
 Открываем конфигурацию нашего сервера: `sudo nano /etc/nginx/sites-available/your_domain` 
 И прописываем в нем [данную конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_4.conf)
-
-> Не забываем везде изменить **your_domain** на имя вашего домена
 
 Далее включим файл, создав из него ссылку на sites-enabled каталог: `sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/`
 
