@@ -33,9 +33,7 @@
 
 `sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"`
 
-Затем снова обновите действующий список пакетов:
-
-`sudo apt update`
+Затем снова обновите действующий список пакетов: `sudo apt update`
 
 - [x] **Установим Docker:**
 
@@ -53,7 +51,7 @@
 
 `git clone https://github.com/h0riz4n/lottery_bot`
 
-> Либо же можете установить FileZilla, ввести в неё все необходимые данные сервера (ip-адрес, логин (root), пароль, порт (22)) и через приложене вручную перенести файлы на сервер в директорию telegram_bot.
+> Либо же можете установить FileZilla, ввести в неё все необходимые данные сервера: ip-адрес, логин (root), пароль, порт (22) и через приложение вручную перенести файлы на сервер в директорию telegram_bot.
 
 И в директории telegram_bot создаём директории: `mkdir views && mkdir dhparam`
 
@@ -61,28 +59,6 @@
  
 Прежде всего Вам будет необходимо изменить файл `./nginx-conf/nginx.conf` на [эту конфигурацию](https://github.com/h0riz4n/lottery_bot/blob/main/nginx-conf/nginx_2.conf) _(не забудьте изменить в **8** строке example.com на **имя вашего домена**)_ и в volumes сервиса webserver файла docker-compose.yml провести следующие изменения:
 - Небходимо будет добавить `- ./nginx-conf:/etc/nginx/conf.d` и убрать или закомментировать строку `- ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf`
-
-> Должно выглядеть так:
- webserver:
-     image: nginx:mainline-alpine
-     container_name: webserver
-     restart: unless-stopped
-     ports:
-       - "80:80"
-       - "443:443"
-     expose:
-       - "3001"
-     extra_hosts:
-       - "site1.loc:172.17.0.1"
-     volumes:
-       - web-root:/var/www/html
-       - ./nginx-conf:/etc/nginx/conf.d
-       #- ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
-       - certbot-etc:/etc/letsencrypt
-       - certbot-var:/var/lib/letsencrypt
-       - dhparam:/etc/ssl/certs
-     networks:
-       - app-network
 
 Потом, **находясь в директории с файлом docker-compose.yml,** прописываем команду: `docker-compose up -d` _(флаг **-d** необходим, чтобы запустить развёртывание в фоновом режиме)_ 
 
@@ -107,8 +83,11 @@
 ### И телеграм бот теперь запущен и готов к работе!
 
 # Запуск бота на Localhost. (Nginx и Let's Encrypt)
-Для запуска бота на хосте, будет необходимо провести настройки для прокси-сервера Nginx и добавить сертификаты для доменов с помощью Let's Encrypt. 
-Для проведения настроек вот [статья на digitalocean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04-ru).
-После проведения процедур найстроки конфигурации файла `/etc/nginx/nginx.conf` бот будет работать по хосту **127.0.0.1** с портом 3000, 3001, 8080, 7771, 7772 и 8443. 
+Прежде всего необходимо обновить действующий список пакетов: `sudo apt update`
+
+Далее необходимо установить **nginx**: `sudo apt install nginx`
+
+![image](https://user-images.githubusercontent.com/100841904/183038335-098bc58a-5ca2-4204-a78c-ec0e8223af4e.png)
+
 
 > Бот расчитан на то, что база данных будет находиться удалённо от бота, поэтому образы **PostgreSQL** не были добавлены в файл `docker-compose.yml`
