@@ -1,0 +1,7 @@
+[Service]
+WorkingDirectory=/root/telegram_bot
+User=root
+ExecStart=python3 /root/telegram_bot/bot.py
+[Install]
+WantedBy=multi-user.target
+EOF
